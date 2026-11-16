@@ -1,0 +1,105 @@
+
+{% load static i18n %}
+
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Travel Agency{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{% static 'website/css/style.css' %}">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <a href="{% url 'home' %}" class="brand">
+        {% if agency.logo %}
+            <img src="{{ agency.logo.url }}" alt="{{ agency.name }}">
+        {% endif %}
+
+        <span>{{ agency.name|default:"Travel Agency" }}</span>
+    </a>
+
+    <nav>
+        <a href="{% url 'contact' %}">
+            {% trans "Contact us" %}
+        </a>
+
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+
+            <input type="hidden"
+                   name="next"
+                   value="{{ request.get_full_path }}">
+
+            <select name="language" onchange="this.form.submit()">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+            </select>
+        </form>
+    </nav>
+
+</header>
+
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+
+<footer class="footer">
+
+    <h2>{{ agency.name }}</h2>
+
+    <p>
+        {% if request.LANGUAGE_CODE == "es" %}
+            {{ agency.description_es }}
+        {% else %}
+            {{ agency.description_en }}
+        {% endif %}
+    </p>
+
+    <p>
+        <a href="tel:{{ agency.telephone_1 }}">
+            {{ agency.telephone_1 }}
+        </a>
+    </p>
+
+    {% if agency.telephone_2 %}
+        <p>
+            <a href="tel:{{ agency.telephone_2 }}">
+                {{ agency.telephone_2 }}
+            </a>
+        </p>
+    {% endif %}
+
+    <p>
+        <a href="mailto:{{ agency.email }}">
+            {{ agency.email }}
+        </a>
+    </p>
+
+    <p>{{ agency.address }}</p>
+
+    <div>
+        {% if agency.instagram_url %}
+            <a href="{{ agency.instagram_url }}">Instagram</a>
+        {% endif %}
+
+        {% if agency.facebook_url %}
+            <a href="{{ agency.facebook_url }}">Facebook</a>
+        {% endif %}
+    </div>
+
+</footer>
+
+</body>
+</html>
