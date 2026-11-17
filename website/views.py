@@ -1,7 +1,10 @@
-from django.shortcuts import render
-
 from django.views.generic import (TemplateView, DetailView)
 from .models import Package,Blog, AgencySettings
+from django.views.generic import FormView
+from django.core.mail import send_mail
+from django.urls import reverse_lazy
+from django.core.mail import EmailMessage
+from .forms import ContactForm
 
 class HomeView(TemplateView):
     template_name = "website/home.html"
@@ -42,5 +45,36 @@ class BlogDetailView(DetailView):
 
         return queryset
 
-class ContactView(TemplateView):
+class ContactView(FormView):
     template_name = "website/contact.html"
+    form_class = ContactForm
+    success_url = reverse_lazy("contact")
+
+    def form_valid(self, form):
+        agency = AgencySettings.objects.first()
+
+        if not agency:
+            form.add_error(
+                None,
+                "Agency contact information is not configured."
+            )
+            return self.form_invalid(form)
+
+        email = EmailMessage(
+            subject=(
+                f"Website enquiry from "
+                f"{form.cleaned_data['name']}"
+            ),
+            body=(
+                f"Name: {form.cleaned_data['name']}\n"
+                f"Email: {form.cleaned_data['email']}\n"
+                f"Telephone: {form.cleaned_data['telephone']}\n\n"
+                f"Message:\n{form.cleaned_data['message']}"
+            ),
+            to=[agency.email],
+            reply_to=[form.cleaned_data["email"]],
+        )
+
+        email.send()
+
+        return super().form_valid(form)

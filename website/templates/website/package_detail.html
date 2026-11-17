@@ -1,0 +1,52 @@
+{% extends "website/base.html" %}
+
+{% block title %}{{ package.name_en }}{% endblock %}
+
+{% block content %}
+
+<section class="detail-hero"
+         style="background-image: url('{{ package.image.url }}')">
+
+    <h1>
+        {% if request.LANGUAGE_CODE == "es" %}
+            {{ package.name_es }}
+        {% else %}
+            {{ package.name_en }}
+        {% endif %}
+    </h1>
+
+</section>
+
+<section class="detail-content">
+
+    <h2>
+        {% if request.LANGUAGE_CODE == "es" %}
+            {{ package.name_es }}
+        {% else %}
+            {{ package.name_en }}
+        {% endif %}
+    </h2>
+
+    <p>
+        {% if request.LANGUAGE_CODE == "es" %}
+            {{ package.description_es }}
+        {% else %}
+            {{ package.description_en }}
+        {% endif %}
+    </p>
+
+    <h3>{{ package.price }}</h3>
+
+    <a href="{% url 'contact' %}">
+        Contact us
+    </a>
+
+    {% if package.blog and package.blog.is_available %}
+        <a href="{% url 'blog-detail' package.blog.slug %}">
+            Read related article
+        </a>
+    {% endif %}
+
+</section>
+
+{% endblock %}

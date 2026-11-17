@@ -1,0 +1,136 @@
+
+{% extends "website/base.html" %}
+
+{% block title %}{{ agency.name }}{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <h1>
+        {% if request.LANGUAGE_CODE == "es" %}
+            Descubre el mundo con nosotros
+        {% else %}
+            Discover the world with us
+        {% endif %}
+    </h1>
+</section>
+
+
+<section class="content-section">
+
+    <h2>
+        {% if request.LANGUAGE_CODE == "es" %}
+            Nuestros paquetes
+        {% else %}
+            Our travel packages
+        {% endif %}
+    </h2>
+
+    {% for package in packages %}
+
+        <article class="content-card">
+
+            <div class="content-card__image">
+                <img src="{{ package.image.url }}"
+                     alt="{{ package.name_en }}">
+            </div>
+
+            <div class="content-card__content">
+
+                <h3>
+                    {% if request.LANGUAGE_CODE == "es" %}
+                        {{ package.name_es }}
+                    {% else %}
+                        {{ package.name_en }}
+                    {% endif %}
+                </h3>
+
+                <p>
+                    {% if request.LANGUAGE_CODE == "es" %}
+                        {{ package.description_es|truncatewords:30 }}
+                    {% else %}
+                        {{ package.description_en|truncatewords:30 }}
+                    {% endif %}
+                </p>
+
+                <strong>{{ package.price }}</strong>
+
+                <a href="{% url 'package-detail' package.slug %}">
+                    {% if request.LANGUAGE_CODE == "es" %}
+                        Ver paquete
+                    {% else %}
+                        View package
+                    {% endif %}
+                </a>
+
+            </div>
+
+        </article>
+
+    {% empty %}
+
+        <p>No packages available.</p>
+
+    {% endfor %}
+
+</section>
+
+
+<section class="content-section">
+
+    <h2>
+        {% if request.LANGUAGE_CODE == "es" %}
+            Últimos artículos
+        {% else %}
+            Latest articles
+        {% endif %}
+    </h2>
+
+    {% for blog in blogs %}
+
+        <article class="content-card">
+
+            <div class="content-card__image">
+                <img src="{{ blog.image.url }}"
+                     alt="{{ blog.title_en }}">
+            </div>
+
+            <div class="content-card__content">
+
+                <h3>
+                    {% if request.LANGUAGE_CODE == "es" %}
+                        {{ blog.title_es }}
+                    {% else %}
+                        {{ blog.title_en }}
+                    {% endif %}
+                </h3>
+
+                <h4>
+                    {% if request.LANGUAGE_CODE == "es" %}
+                        {{ blog.subtitle_es }}
+                    {% else %}
+                        {{ blog.subtitle_en }}
+                    {% endif %}
+                </h4>
+
+                <a href="{% url 'blog-detail' blog.slug %}">
+                    {% if request.LANGUAGE_CODE == "es" %}
+                        Leer más
+                    {% else %}
+                        Read more
+                    {% endif %}
+                </a>
+
+            </div>
+
+        </article>
+
+    {% empty %}
+
+        <p>No articles available.</p>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}
