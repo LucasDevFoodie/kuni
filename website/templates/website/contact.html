@@ -1,39 +1,39 @@
 {% extends "website/base.html" %}
 
-{% block title %}Contact us{% endblock %}
+{% block title %}{% trans "Contact Us" %}{% endblock %}
 
 {% block content %}
 
 <section class="detail-content">
 
-    <h1>Contact us</h1>
+    <h1>{% trans "Contact Us" %}</h1>
 
-    <p>Email: {{ agency.email }}</p>
-
+    
     <p>
         <a href="tel:{{ agency.telephone_1 }}">
             {{ agency.telephone_1 }}
         </a>
     </p>
-
+    
     {% if agency.telephone_2 %}
-        <p>
-            <a href="tel:{{ agency.telephone_2 }}">
-                {{ agency.telephone_2 }}
+    <p>
+        <a href="tel:{{ agency.telephone_2 }}">
+            {{ agency.telephone_2 }}
             </a>
         </p>
-    {% endif %}
-
-    <form method="post">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <button type="submit">
-            Send message
-        </button>
-    </form>
-
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+            
+            <button type="submit">
+                {{ trans "Send message" }}
+            </button>
+        </form>
+        
+        <p>{{ agency.name }} Email: {{ agency.email }}</p>
 </section>
 
 {% endblock %}

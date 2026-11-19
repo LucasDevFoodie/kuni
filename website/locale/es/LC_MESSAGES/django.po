@@ -1,0 +1,69 @@
+
+# Spanish translations for Travel Agency.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Travel Agency\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-19 05:43+0000\n"
+"PO-Revision-Date: 2026-11-19 16:00+1100\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: website/templates/website/base.html:36
+#: website/templates/website/base.html:146
+#: website/templates/website/base.html:155
+msgid "Travel Agency"
+msgstr "Agencia de viajes"
+
+#: website/templates/website/base.html:45
+#: website/templates/website/contact.html:3
+#: website/templates/website/contact.html:9
+#: website/templates/website/package_detail.html:29
+msgid "Contact Us"
+msgstr "Contáctanos"
+
+#: website/templates/website/base.html:57
+msgid "Select language"
+msgstr "Seleccionar idioma"
+
+#: website/templates/website/blog_detail.html:29
+msgid "View Related Package"
+msgstr "Ver paquete relacionado"
+
+#: website/templates/website/home.html:8
+msgid "Discover The World"
+msgstr "Descubre el mundo"
+
+#: website/templates/website/home.html:16
+msgid "Our Travel Packages"
+msgstr "Nuestros paquetes de viaje"
+
+#: website/templates/website/home.html:39
+msgid "View Package"
+msgstr "Ver paquete"
+
+#: website/templates/website/home.html:48
+msgid "No Packages Available"
+msgstr "No hay paquetes disponibles"
+
+#: website/templates/website/home.html:58
+msgid "Latest Articles"
+msgstr "Últimos artículos"
+
+#: website/templates/website/home.html:80
+msgid "Read more"
+msgstr "Leer más"
+
+#: website/templates/website/home.html:89
+msgid "No Articles Available"
+msgstr "No hay artículos disponibles"
+
+#: website/templates/website/package_detail.html:34
+msgid "Read Related Article"
+msgstr "Leer artículo relacionado"

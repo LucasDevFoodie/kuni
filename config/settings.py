@@ -69,6 +69,10 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 "website.context_processors.agency_settings",
             ],
+            "builtins": [
+                "django.templatetags.static",
+                "django.templatetags.i18n"
+            ]
         },
     },
 ]
@@ -119,6 +123,8 @@ LANGUAGES = [
     ("en", "English"),
     ("es", "Español"),
 ]
+
+LOCALE_PATHS = [ BASE_DIR / "website" / "locale"]
 
 TIME_ZONE = 'UTC'
 

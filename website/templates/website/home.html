@@ -1,17 +1,11 @@
-
 {% extends "website/base.html" %}
-
 {% block title %}{{ agency.name }}{% endblock %}
 
 {% block content %}
 
 <section class="hero">
     <h1>
-        {% if request.LANGUAGE_CODE == "es" %}
-            Descubre el mundo con nosotros
-        {% else %}
-            Discover the world with us
-        {% endif %}
+        {% trans "Discover The World" %}
     </h1>
 </section>
 
@@ -19,57 +13,39 @@
 <section class="content-section">
 
     <h2>
-        {% if request.LANGUAGE_CODE == "es" %}
-            Nuestros paquetes
-        {% else %}
-            Our travel packages
-        {% endif %}
+         {% trans "Our Travel Packages" %}
     </h2>
 
     {% for package in packages %}
 
-        <article class="content-card">
+    <article class="content-card">
 
-            <div class="content-card__image">
-                <img src="{{ package.image.url }}"
-                     alt="{{ package.name_en }}">
-            </div>
+        <div class="content-card__image">
+            <img src="{{ package.image.url }}" alt="{{ package.name_en }}">
+        </div>
 
-            <div class="content-card__content">
+        <div class="content-card__content">
 
-                <h3>
-                    {% if request.LANGUAGE_CODE == "es" %}
-                        {{ package.name_es }}
-                    {% else %}
-                        {{ package.name_en }}
-                    {% endif %}
-                </h3>
+            <h3>
+                {{ package.name }}
+            </h3>
+            <p>
+                {{ package.descriptions|truncatewords:30 }}
+            </p>
 
-                <p>
-                    {% if request.LANGUAGE_CODE == "es" %}
-                        {{ package.description_es|truncatewords:30 }}
-                    {% else %}
-                        {{ package.description_en|truncatewords:30 }}
-                    {% endif %}
-                </p>
+            <strong>{{ package.price }}</strong>
 
-                <strong>{{ package.price }}</strong>
+            <a href="{% url 'package-detail' package.slug %}">
+                {% trans "View Package" %}
+            </a>
 
-                <a href="{% url 'package-detail' package.slug %}">
-                    {% if request.LANGUAGE_CODE == "es" %}
-                        Ver paquete
-                    {% else %}
-                        View package
-                    {% endif %}
-                </a>
+        </div>
 
-            </div>
-
-        </article>
+    </article>
 
     {% empty %}
 
-        <p>No packages available.</p>
+    <p>{% trans "No Packages Available" %}</p>
 
     {% endfor %}
 
@@ -79,55 +55,38 @@
 <section class="content-section">
 
     <h2>
-        {% if request.LANGUAGE_CODE == "es" %}
-            Últimos artículos
-        {% else %}
-            Latest articles
-        {% endif %}
+        {% trans "Latest Articles" %}
     </h2>
 
     {% for blog in blogs %}
 
-        <article class="content-card">
+    <article class="content-card">
 
-            <div class="content-card__image">
-                <img src="{{ blog.image.url }}"
-                     alt="{{ blog.title_en }}">
-            </div>
+        <div class="content-card__image">
+            <img src="{{ blog.image.url }}" alt="{{ blog.title_en }}">
+        </div>
 
-            <div class="content-card__content">
+        <div class="content-card__content">
 
-                <h3>
-                    {% if request.LANGUAGE_CODE == "es" %}
-                        {{ blog.title_es }}
-                    {% else %}
-                        {{ blog.title_en }}
-                    {% endif %}
-                </h3>
+            <h3>
+                {{ blog.title}}
+            </h3>
 
-                <h4>
-                    {% if request.LANGUAGE_CODE == "es" %}
-                        {{ blog.subtitle_es }}
-                    {% else %}
-                        {{ blog.subtitle_en }}
-                    {% endif %}
-                </h4>
+            <h4>
+                {{ blog.subtitle }}
+            </h4>
 
-                <a href="{% url 'blog-detail' blog.slug %}">
-                    {% if request.LANGUAGE_CODE == "es" %}
-                        Leer más
-                    {% else %}
-                        Read more
-                    {% endif %}
-                </a>
+            <a href="{% url 'blog-detail' blog.slug %}">
+                {% trans "Read more" %}
+            </a>
 
-            </div>
+        </div>
 
-        </article>
+    </article>
 
     {% empty %}
 
-        <p>No articles available.</p>
+    <p>{% trans "No Articles Available" %}</p>
 
     {% endfor %}
 

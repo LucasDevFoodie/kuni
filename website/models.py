@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
+from .mixin.translation import TranslatableModelMixin
 
-
-class Package(models.Model):
+class Package(TranslatableModelMixin, models.Model):
     name_en = models.CharField(max_length=200)
     name_es = models.CharField(max_length=200)
 
@@ -27,6 +27,14 @@ class Package(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def name(self):
+        return self.get_translated_field("name")
+    
+    @property
+    def descriptio(self):
+        return self.get_translated_field("description")
+    
     class Meta:
         ordering = ["-created_at"]
 
@@ -40,7 +48,7 @@ class Package(models.Model):
         return self.name_en
 
 
-class Blog(models.Model):
+class Blog(TranslatableModelMixin, models.Model):
     title_en = models.CharField(max_length=200)
     title_es = models.CharField(max_length=200)
 
@@ -71,6 +79,18 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def title(self):
+        return self.get_translated_field("title")
+
+    @property
+    def subtitle(self):
+        return self.get_translated_field("subtitle")
+
+    @property
+    def description(self):
+        return self.get_translated_field("description")
+
     class Meta:
         ordering = ["-created_at"]
 
@@ -84,7 +104,7 @@ class Blog(models.Model):
         return self.title_en
 
 
-class AgencySettings(models.Model):
+class AgencySettings(TranslatableModelMixin, models.Model):
     name = models.CharField(max_length=200)
 
     logo = models.ImageField(
@@ -112,5 +132,9 @@ class AgencySettings(models.Model):
     instagram_url = models.URLField(blank=True)
     facebook_url = models.URLField(blank=True)
 
+    @property
+    def description(self):
+        return self.get_translated_field("description")
+    
     def __str__(self):
         return self.name

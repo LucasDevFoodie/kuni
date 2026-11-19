@@ -1,6 +1,6 @@
 {% extends "website/base.html" %}
 
-{% block title %}{{ package.name_en }}{% endblock %}
+{% block title %}{{ package.name }}{% endblock %}
 
 {% block content %}
 
@@ -8,11 +8,7 @@
          style="background-image: url('{{ package.image.url }}')">
 
     <h1>
-        {% if request.LANGUAGE_CODE == "es" %}
-            {{ package.name_es }}
-        {% else %}
-            {{ package.name_en }}
-        {% endif %}
+        {{ package.name }}
     </h1>
 
 </section>
@@ -20,30 +16,22 @@
 <section class="detail-content">
 
     <h2>
-        {% if request.LANGUAGE_CODE == "es" %}
-            {{ package.name_es }}
-        {% else %}
-            {{ package.name_en }}
-        {% endif %}
+        {{ package.name }}
     </h2>
 
     <p>
-        {% if request.LANGUAGE_CODE == "es" %}
-            {{ package.description_es }}
-        {% else %}
-            {{ package.description_en }}
-        {% endif %}
+        {{ package.description }}
     </p>
 
     <h3>{{ package.price }}</h3>
 
     <a href="{% url 'contact' %}">
-        Contact us
+        {% trans "Contact Us" %}
     </a>
 
     {% if package.blog and package.blog.is_available %}
         <a href="{% url 'blog-detail' package.blog.slug %}">
-            Read related article
+            {% trans "Read Related Article" %}
         </a>
     {% endif %}
 
