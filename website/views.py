@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.core.mail import EmailMessage
 from .forms import ContactForm
+from django.shortcuts import get_object_or_404, render
 
 class HomeView(TemplateView):
     template_name = "website/home.html"
@@ -31,6 +32,19 @@ class PackageDetailView(DetailView):
             queryset.filter(is_available=True)
 
         return queryset
+
+    def package_detail(request, slug):
+        package = get_object_or_404(
+        Package,
+        slug=slug,
+        is_available=True,
+        )
+
+        return render(
+        request,
+        "website/package_detail.html",
+        {"package": package},
+        )
 
 class BlogDetailView(DetailView):
     model = Blog
