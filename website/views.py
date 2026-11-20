@@ -1,10 +1,10 @@
 from django.views.generic import (TemplateView, DetailView)
-from .models import Package,Blog, AgencySettings
+from .models import Package,Blog
 from django.views.generic import FormView
-from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.core.mail import EmailMessage
 from .forms import ContactForm
+from django.conf import settings
 
 class HomeView(TemplateView):
     template_name = "website/home.html"
@@ -14,8 +14,6 @@ class HomeView(TemplateView):
 
         context["packages"] = (Package.objects.filter(is_available=True).order_by("-created_at"))
         context["blogs"] = (Blog.objects.filter(is_available=True).select_related("package").order_by("-created_at"))
-
-        context["agency"] = AgencySettings.objects.first()
 
         return context
 
@@ -51,9 +49,9 @@ class ContactView(FormView):
     success_url = reverse_lazy("contact")
 
     def form_valid(self, form):
-        agency = AgencySettings.objects.first()
+        agency_email = settings.AGENCY["email"]
 
-        if not agency:
+        if not agency_email:
             form.add_error(
                 None,
                 "Agency contact information is not configured."
@@ -71,10 +69,10 @@ class ContactView(FormView):
                 f"Telephone: {form.cleaned_data['telephone']}\n\n"
                 f"Message:\n{form.cleaned_data['message']}"
             ),
-            to=[agency.email],
+            to=[agency_email],
             reply_to=[form.cleaned_data["email"]],
         )
 
-        email.send()
+        email.send(fail_silently=False)
 
         return super().form_valid(form)

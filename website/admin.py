@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Package, Blog, AgencySettings
+from .models import Package, Blog
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
@@ -28,6 +28,3 @@ class BlogAdmin(admin.ModelAdmin):
     list_filter = ("is_available",)
     search_fields = ("title_en", "title_es")
 
-@admin.register(AgencySettings)
-class AgencySettingsAdmin(admin.ModelAdmin):
-    list_display = ("name", "email")

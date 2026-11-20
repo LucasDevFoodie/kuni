@@ -102,39 +102,3 @@ class Blog(TranslatableModelMixin, models.Model):
 
     def __str__(self):
         return self.title_en
-
-
-class AgencySettings(TranslatableModelMixin, models.Model):
-    name = models.CharField(max_length=200)
-
-    logo = models.ImageField(
-        upload_to="agency/",
-        blank=True,
-        null=True,
-    )
-
-    description_en = models.TextField(blank=True)
-    description_es = models.TextField(blank=True)
-
-    email = models.EmailField()
-
-    telephone_1 = models.CharField(max_length=30)
-    telephone_2 = models.CharField(
-        max_length=30,
-        blank=True,
-    )
-
-    address = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-
-    instagram_url = models.URLField(blank=True)
-    facebook_url = models.URLField(blank=True)
-
-    @property
-    def description(self):
-        return self.get_translated_field("description")
-    
-    def __str__(self):
-        return self.name

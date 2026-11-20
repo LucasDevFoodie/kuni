@@ -65,14 +65,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "django.template.context_processors.request",
-                "django.template.context_processors.i18n",
-                "website.context_processors.agency_settings",
+                'django.template.context_processors.i18n',
+                'website.context_processors.agency_settings',
             ],
-            "builtins": [
-                "django.templatetags.static",
-                "django.templatetags.i18n"
-            ]
+            'builtins': [
+                'django.templatetags.static',
+                'django.templatetags.i18n',
+            ],
         },
     },
 ]
@@ -155,4 +154,21 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 EMAIL_BACKEND = (
     "django.core.mail.backends.console.EmailBackend"
+)
+
+AGENCY = {
+    "name": os.getenv("AGENCY_NAME", "Travel Agency"),
+    "email": os.getenv("AGENCY_EMAIL", ""),
+    "phone": os.getenv("AGENCY_PHONE", ""),
+    "whatsapp": os.getenv("AGENCY_WHATSAPP", ""),
+    "address": os.getenv("AGENCY_ADDRESS", ""),
+    "logo": os.getenv("AGENCY_LOGO", ""),
+    "instagram": os.getenv("AGENCY_INSTAGRAM", ""),
+    "facebook": os.getenv("AGENCY_FACEBOOK", ""),
+    "footer_text": os.getenv("AGENCY_FOOTER_TEXT", ""),
+}
+
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL",
+    "webmaster@localhost",
 )

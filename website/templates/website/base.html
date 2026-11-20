@@ -1,5 +1,5 @@
 {% get_current_language as CURRENT_LANGUAGE %}
-
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="{{ CURRENT_LANGUAGE }}">
 
@@ -10,7 +10,7 @@
     <title>{% block title %}{{ agency.name }}{% endblock %}</title>
 
     <meta name="description"
-          content="{% block meta_description %}Discover our travel packages and experiences.{% endblock %}">
+        content="{% block meta_description %}Discover our travel packages and experiences.{% endblock %}">
 
     <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
 
@@ -24,18 +24,11 @@
 
         <a href="{% url 'home' %}" class="brand">
 
-            {% if agency and agency.logo %}
-                <img src="{{ agency.logo.url }}"
-                     alt="{{ agency.name }}">
+            {% if agency.logo %}
+            <img src="{% static agency.logo %}" alt="{{ agency.name }}">
             {% endif %}
 
-            <span>
-                {% if agency %}
-                    {{ agency.name }}
-                {% else %}
-                    {% trans "Travel Agency" %}
-                {% endif %}
-            </span>
+            <span>{{ agency.name }}</span>
 
         </a>
 
@@ -49,21 +42,15 @@
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
 
-                <input type="hidden"
-                       name="next"
-                       value="{{ request.get_full_path }}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
 
-                <select name="language"
-                        aria-label="{% trans 'Select language' %}"
-                        onchange="this.form.submit()">
+                <select name="language" aria-label="{% trans 'Select language' %}" onchange="this.form.submit()">
 
-                    <option value="en"
-                        {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>
+                    <option value="en" {% if CURRENT_LANGUAGE=="en" %}selected{% endif %}>
                         English
                     </option>
 
-                    <option value="es"
-                        {% if CURRENT_LANGUAGE == "es" %}selected{% endif %}>
+                    <option value="es" {% if CURRENT_LANGUAGE=="es" %}selected{% endif %}>
                         Español
                     </option>
 
@@ -85,75 +72,58 @@
     <!-- Footer -->
     <footer class="footer">
 
-        {% if agency %}
+        <h2>{{ agency.name }}</h2>
 
-            <h2>{{ agency.name }}</h2>
-
-            <p>
-                {{ agency.description}}
-            </p>
-
-            {% if agency.telephone_1 %}
-                <p>
-                    <a href="tel:{{ agency.telephone_1 }}">
-                        {{ agency.telephone_1 }}
-                    </a>
-                </p>
-            {% endif %}
-
-            {% if agency.telephone_2 %}
-                <p>
-                    <a href="tel:{{ agency.telephone_2 }}">
-                        {{ agency.telephone_2 }}
-                    </a>
-                </p>
-            {% endif %}
-
-            {% if agency.email %}
-                <p>
-                    <a href="mailto:{{ agency.email }}">
-                        {{ agency.email }}
-                    </a>
-                </p>
-            {% endif %}
-
-            {% if agency.address %}
-                <p>{{ agency.address }}</p>
-            {% endif %}
-
-            <div class="footer-social">
-
-                {% if agency.instagram_url %}
-                    <a href="{{ agency.instagram_url }}"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Instagram
-                    </a>
-                {% endif %}
-
-                {% if agency.facebook_url %}
-                    <a href="{{ agency.facebook_url }}"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Facebook
-                    </a>
-                {% endif %}
-
-            </div>
-
-        {% else %}
-
-            <p>{% trans "Travel Agency" %}</p>
-
+        {% if agency.footer_text %}
+        <p>{{ agency.footer_text }}</p>
         {% endif %}
 
-        <p class="footer-copyright">
-            &copy; {% now "Y" %}
-            {% if agency %}
-                {{ agency.name }}
-            {% else %}
-                {% trans "Travel Agency" %}
+        {% if agency.phone %}
+        <p>
+            <a href="tel:{{ agency.phone }}">
+                {{ agency.phone }}
+            </a>
+        </p>
+        {% endif %}
+
+        {% if agency.whatsapp %}
+        <p>
+            <a href="https://wa.me/{{ agency.whatsapp }}">
+                WhatsApp
+            </a>
+        </p>
+        {% endif %}
+
+        {% if agency.email %}
+        <p>
+            <a href="mailto:{{ agency.email }}">
+                {{ agency.email }}
+            </a>
+        </p>
+        {% endif %}
+
+        {% if agency.address %}
+        <p>{{ agency.address }}</p>
+        {% endif %}
+
+        <div class="footer-social">
+
+            {% if agency.instagram %}
+            <a href="{{ agency.instagram }}" target="_blank" rel="noopener noreferrer">
+                Instagram
+            </a>
             {% endif %}
+
+            {% if agency.facebook %}
+            <a href="{{ agency.facebook }}" target="_blank" rel="noopener noreferrer">
+                Facebook
+            </a>
+            {% endif %}
+
+        </div>
+
+        <p class="footer-copyright">
+            &copy; {% now "Y" %} {{ agency.name }}
         </p>
 
     </footer>
@@ -163,4 +133,5 @@
     {% block extra_js %}{% endblock %}
 
 </body>
+
 </html>
