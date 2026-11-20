@@ -48,13 +48,22 @@ a {
 }
 
 .hero {
-    min-height: 400px;
+    min-height: 550px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 40px;
-    background: #e9e5df;
+    background-image:
+        linear-gradient(
+            rgba(250, 217, 147, 0.45),
+            rgba(255, 255, 254, 0.45)
+        ),
+        url("../images/hero.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero h1 {
