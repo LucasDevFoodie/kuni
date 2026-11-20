@@ -32,7 +32,7 @@ class Package(TranslatableModelMixin, models.Model):
         return self.get_translated_field("name")
     
     @property
-    def descriptio(self):
+    def description(self):
         return self.get_translated_field("description")
     
     class Meta:
